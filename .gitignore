@@ -1,0 +1,8 @@
+# dist
+out
+.vscode-test/
+*.vsix
+
+
+# npm
+node_modules

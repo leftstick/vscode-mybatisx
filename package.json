@@ -1,0 +1,36 @@
+{
+  "name": "vscode-mybatisx",
+  "displayName": "vscode-mybatisx",
+  "description": "MybatisX implementation for vscode",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.36.0"
+  },
+  "categories": [
+    "Language Packs"
+  ],
+  "activationEvents": [
+    "onLanguage:java",
+    "workspaceContains:pom.xml"
+  ],
+  "main": "./out/extension.js",
+  "scripts": {
+    "vscode:prepublish": "yarn run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "yarn run compile"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.1",
+    "@types/node": "^10.12.21",
+    "@types/vscode": "^1.36.0",
+    "glob": "^7.1.4",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.1"
+  },
+  "dependencies": {
+    "java-parser": "^0.3.1",
+    "jsonpath": "^1.0.2",
+    "lodash": "^4.17.15"
+  }
+}
