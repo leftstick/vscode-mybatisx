@@ -10,7 +10,6 @@
     "Language Packs"
   ],
   "activationEvents": [
-    "onLanguage:java",
     "workspaceContains:pom.xml"
   ],
   "main": "./out/extension.js",
