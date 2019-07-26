@@ -1,11 +1,49 @@
+import * as path from 'path'
 import { TextDocument } from 'vscode'
-import { MethodDeclaration } from '../types/Codes'
+import { MethodDeclaration, MapperStruct, MapperType } from '../types/Codes'
+import { IMapper, getMapperType } from './IMapper'
 
-export function isValidMyBatisMapperImpl(code: string) {
-  return /(interface|class).+extends\s+BaseMapper/.test(code)
+class JavaMapper implements IMapper {
+  isValid(doc: TextDocument): boolean {
+    if (!doc) {
+      return false
+    }
+    return /(interface|class).+extends[\s\S]+?Mapper/.test(doc.getText())
+  }
+
+  parse(document: TextDocument): MapperStruct | undefined {
+    const xmlContent = document.getText()
+
+    const matchedPacakgeName = xmlContent.match(/package\s+([a-zA-Z_\.]+)?;/)
+    if (!matchedPacakgeName || !matchedPacakgeName[1]) {
+      return
+    }
+    const matchedClassName = xmlContent.match(/(?:interface|class)\s+([a-zA-Z_]+)?\s+extends/)
+    if (!matchedClassName || !matchedClassName[1]) {
+      return
+    }
+    const namespace = `${matchedPacakgeName[1]}.${matchedClassName[1]}`
+
+    const methods = findMethodDeclarations(document)
+
+    const mapperType = getMapperType(document.uri.fsPath)
+
+    if (!mapperType) {
+      return
+    }
+
+    return {
+      namespace,
+      uri: document.uri,
+      methods,
+      type: mapperType
+    }
+  }
 }
 
-export function findMethodDeclarations(document: TextDocument): Array<MethodDeclaration> {
+export default new JavaMapper()
+
+function findMethodDeclarations(document: TextDocument): Array<MethodDeclaration> {
   const fileContent = document.getText()
   const matched = fileContent.match(/(?:interface|class).+extends.+{([\s\n\r\S]*)}/)
   if (!matched) {

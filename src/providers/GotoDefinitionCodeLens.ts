@@ -1,21 +1,40 @@
 import { CodeLensProvider, TextDocument, CodeLens, Range, Command, Position } from 'vscode'
 import { MethodDeclaration } from '../types/Codes'
-import { isValidMyBatisMapperImpl, findMethodDeclarations } from '../helpers/Java'
+import mapperService from '../helpers/Java'
+import MybatisMapperXMLWatcher from './MybatisMapperXMLWatcher'
 
 export default class GotoDefinitionCodeLens implements CodeLensProvider {
+  private mybatisMapperXMLWatcher: MybatisMapperXMLWatcher
+
+  constructor(mybatisMapperXMLWatcher: MybatisMapperXMLWatcher) {
+    this.mybatisMapperXMLWatcher = mybatisMapperXMLWatcher
+  }
+
   async provideCodeLenses(document: TextDocument): Promise<CodeLens[]> {
     // not valid BaseMapper implementation
-    if (!isValidMyBatisMapperImpl(document.getText())) {
+    if (!mapperService.isValid(document)) {
       return []
     }
 
-    const methods = findMethodDeclarations(document)
+    const struct = mapperService.parse(document)
 
-    return methods
+    if (!struct) {
+      return []
+    }
+
+    return struct.methods
       .map(m => {
+        const mapper = this.mybatisMapperXMLWatcher
+          .getMapperXMLs()
+          .find(mapper => mapper.type === struct.type && mapper.namespace === struct.namespace)
+        if (!mapper) {
+          return null
+        }
         const cmd: Command = {
-          command: 'extension.open',
-          title: 'Go to Mapper XML'
+          command: 'vscode.open',
+          title: 'Go to Mapper XML',
+          tooltip: 'will open specific .xml file',
+          arguments: [mapper.uri]
         }
         const range = document.getWordRangeAtPosition(m.position)
         if (!range) {
