@@ -1,9 +1,12 @@
-import * as path from 'path'
 import { TextDocument } from 'vscode'
-import { MapperStruct, MapperType, MethodDeclaration } from '../types/Codes'
-import { IMapper, getMapperType } from './IMapper'
+import { Service, Token } from 'typedi'
+import { Mapper, MethodDeclaration } from '../types/Codes'
+import { IMapperParser, getMapperType } from './MapperParser'
 
-class XMLMapper implements IMapper {
+export const IXmlMapperParserToken = new Token<IMapperParser>()
+
+@Service(IXmlMapperParserToken)
+class XmlMapperParser implements IMapperParser {
   isValid(doc: TextDocument): boolean {
     if (!doc) {
       return false
@@ -12,7 +15,7 @@ class XMLMapper implements IMapper {
     return text.includes('DOCTYPE') && text.includes('mapper') && text.includes('mapper.dtd')
   }
 
-  parse(document: TextDocument): MapperStruct | undefined {
+  parse(document: TextDocument): Mapper | undefined {
     const xmlContent = document.getText()
 
     const matchedNamespce = xmlContent.match(/namespace="(.+)?"/)
@@ -33,12 +36,11 @@ class XMLMapper implements IMapper {
       namespace,
       uri: document.uri,
       methods,
-      type: mapperType
+      type: mapperType,
+      availableInsertPosition: document.positionAt(xmlContent.lastIndexOf('</mapper>'))
     }
   }
 }
-
-export default new XMLMapper()
 
 function findMethodDeclarations(document: TextDocument): Array<MethodDeclaration> {
   const text = document.getText()
@@ -56,10 +58,11 @@ function findMethodDeclarations(document: TextDocument): Array<MethodDeclaration
       if (!matchedName) {
         return
       }
-      const position = document.positionAt(text.indexOf(m))
+      const startOffset = text.indexOf(matchedName[1])
       return {
         name: matchedName[1],
-        position
+        startPosition: document.positionAt(startOffset),
+        endPosition: document.positionAt(startOffset + matchedName[1].length)
       }
     })
     .filter((m): m is MethodDeclaration => !!m)

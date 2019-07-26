@@ -1,13 +1,24 @@
-import * as vscode from 'vscode'
-import GotoDefinitionCodeLens from './GotoDefinitionCodeLens'
-import MybatisMapperXMLWatcher from '../providers/MybatisMapperXMLWatcher'
+import { languages } from 'vscode'
+import { Container } from 'typedi'
+import { IJavaMapperCodeLensToken } from './JavaMapperCodeLens'
+import { IXmlMapperDefinitionProviderToken } from './XmlMapperDefinitionProvider'
 
-export function registerCodeLensProvider(mybatisMapperXMLWatcher: MybatisMapperXMLWatcher) {
-  return vscode.languages.registerCodeLensProvider(
+export function registerCodeLensProvider() {
+  return languages.registerCodeLensProvider(
     {
       scheme: 'file',
       language: 'java'
     },
-    new GotoDefinitionCodeLens(mybatisMapperXMLWatcher)
+    Container.get(IJavaMapperCodeLensToken)
+  )
+}
+
+export function registerDefinitionProvider() {
+  return languages.registerDefinitionProvider(
+    {
+      scheme: 'file',
+      language: 'xml'
+    },
+    Container.get(IXmlMapperDefinitionProviderToken)
   )
 }

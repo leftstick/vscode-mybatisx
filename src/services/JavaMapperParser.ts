@@ -1,9 +1,13 @@
 import * as path from 'path'
 import { TextDocument } from 'vscode'
-import { MethodDeclaration, MapperStruct, MapperType } from '../types/Codes'
-import { IMapper, getMapperType } from './IMapper'
+import { Token, Service } from 'typedi'
+import { MethodDeclaration, Mapper, MapperType } from '../types/Codes'
+import { IMapperParser, getMapperType } from './MapperParser'
 
-class JavaMapper implements IMapper {
+export const IJavaMapperParserToken = new Token<IMapperParser>()
+
+@Service(IJavaMapperParserToken)
+class JavaMapperParser implements IMapperParser {
   isValid(doc: TextDocument): boolean {
     if (!doc) {
       return false
@@ -11,7 +15,7 @@ class JavaMapper implements IMapper {
     return /(interface|class).+extends[\s\S]+?Mapper/.test(doc.getText())
   }
 
-  parse(document: TextDocument): MapperStruct | undefined {
+  parse(document: TextDocument): Mapper | undefined {
     const xmlContent = document.getText()
 
     const matchedPacakgeName = xmlContent.match(/package\s+([a-zA-Z_\.]+)?;/)
@@ -41,8 +45,6 @@ class JavaMapper implements IMapper {
   }
 }
 
-export default new JavaMapper()
-
 function findMethodDeclarations(document: TextDocument): Array<MethodDeclaration> {
   const fileContent = document.getText()
   const matched = fileContent.match(/(?:interface|class).+extends.+{([\s\n\r\S]*)}/)
@@ -54,16 +56,23 @@ function findMethodDeclarations(document: TextDocument): Array<MethodDeclaration
     return []
   }
 
+  console.log(classOrInterfaceContent)
+
   const rawMethods = classOrInterfaceContent.match(/\s+([a-zA-Z_0-9]+)(\s*)\((.*)\)/g)
+
   if (!rawMethods) {
     return []
   }
   return rawMethods
-    .map(r => r.trim())
+    .filter(m => !!m)
+    .map(m => m.trim())
+    .map(m => m.replace(/\s*\(.*\)/, ''))
     .map(m => {
+      const startOffset = fileContent.indexOf(m)
       return {
         name: m,
-        position: document.positionAt(fileContent.indexOf(m))
+        startPosition: document.positionAt(startOffset),
+        endPosition: document.positionAt(startOffset + m.length)
       }
     })
 }
