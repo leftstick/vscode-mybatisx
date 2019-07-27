@@ -61,6 +61,8 @@ class JavaMapperCodeLens implements CodeLensProvider {
   }
 
   private createNewSectionCommand(xmlMapper: Mapper, jMethod: MethodDeclaration) {
+    const sqlTag = this.getSqlTag(jMethod)
+    console.log('sqlTag', sqlTag)
     return {
       command: 'mybatisx.open_and_add_new_section',
       title: 'Create in Mapper xml',
@@ -68,9 +70,9 @@ class JavaMapperCodeLens implements CodeLensProvider {
         xmlMapper.uri,
         xmlMapper.availableInsertPosition,
         `
-    <sql id="${jMethod.name}">
+    <${sqlTag} id="${jMethod.name}">
           
-    </sql>
+    </${sqlTag}>
 
 `
       ]
@@ -89,5 +91,22 @@ class JavaMapperCodeLens implements CodeLensProvider {
         }
       ]
     }
+  }
+
+  private getSqlTag(jMethod: MethodDeclaration) {
+    const lowerCaseMethodName = jMethod.name.toLowerCase()
+    if (lowerCaseMethodName.includes('select')) {
+      return 'select'
+    }
+    if (lowerCaseMethodName.includes('insert')) {
+      return 'insert'
+    }
+    if (lowerCaseMethodName.includes('delete')) {
+      return 'delete'
+    }
+    if (lowerCaseMethodName.includes('update')) {
+      return 'update'
+    }
+    return 'sql'
   }
 }
