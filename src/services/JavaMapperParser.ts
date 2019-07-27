@@ -56,8 +56,6 @@ function findMethodDeclarations(document: TextDocument): Array<MethodDeclaration
     return []
   }
 
-  console.log(classOrInterfaceContent)
-
   const rawMethods = classOrInterfaceContent.match(/\s+([a-zA-Z_0-9]+)(\s*)\((.*)\)/g)
 
   if (!rawMethods) {

@@ -66,7 +66,6 @@ class XmlMapperDefinitionProvider implements DefinitionProvider {
     const classPath = xmlMapper.namespace.replace(/\./g, '/')
 
     const basePath = getFsPathBasedOnMapperType(xmlMapper.uri.fsPath)
-    console.log('basePath', `${basePath}/java/${classPath}.java`)
 
     const targetUri = Uri.file(`${basePath}/java/${classPath}.java`)
     try {
