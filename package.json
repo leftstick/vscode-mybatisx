@@ -1,6 +1,7 @@
 {
   "name": "vscode-mybatisx",
   "displayName": "vscode-mybatisx",
+  "publisher": "howardzuo",
   "description": "MybatisX implementation for vscode",
   "version": "1.0.0",
   "engines": {
