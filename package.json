@@ -7,6 +7,15 @@
   "engines": {
     "vscode": "^1.36.0"
   },
+  "bugs": {
+    "url": "https://github.com/leftstick/vscode-mybatisx/issues",
+    "email": "leftstick@qq.com"
+  },
+  "homepage": "https://github.com/leftstick/vscode-mybatisx/blob/master/README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/leftstick/vscode-mybatisx.git"
+  },
   "categories": [
     "Language Packs"
   ],
