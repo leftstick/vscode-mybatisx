@@ -1,4 +1,4 @@
-import { window, workspace, commands, Uri, Position } from 'vscode'
+import { window, workspace, commands, Uri, Position, Range, TextEditorRevealType } from 'vscode'
 
 export function registerXmlMapperCmd() {
   return commands.registerCommand(
@@ -11,7 +11,13 @@ export function registerXmlMapperCmd() {
       const doc = await workspace.openTextDocument(uri)
       const editor = await window.showTextDocument(doc)
       editor.edit(editBuilder => {
-        editBuilder.replace(position, content)
+        editBuilder.insert(position, content)
+        setTimeout(() => {
+          editor.revealRange(
+            new Range(position, doc.positionAt(doc.getText().length)),
+            TextEditorRevealType.AtTop
+          )
+        }, 100)
       })
     }
   )

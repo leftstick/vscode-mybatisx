@@ -62,7 +62,6 @@ class JavaMapperCodeLens implements CodeLensProvider {
 
   private createNewSectionCommand(xmlMapper: Mapper, jMethod: MethodDeclaration) {
     const sqlTag = this.getSqlTag(jMethod)
-    console.log('sqlTag', sqlTag)
     return {
       command: 'mybatisx.open_and_add_new_section',
       title: 'Create in Mapper xml',
