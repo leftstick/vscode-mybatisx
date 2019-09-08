@@ -12,7 +12,7 @@ class JavaMapperParser implements IMapperParser {
     if (!doc) {
       return false
     }
-    return /(interface|class).+extends[\s\S]+?Mapper/.test(doc.getText())
+    return /(interface|class).+[\s\S]+?Mapper/.test(doc.getText())
   }
 
   parse(document: TextDocument): Mapper | undefined {
@@ -22,7 +22,7 @@ class JavaMapperParser implements IMapperParser {
     if (!matchedPacakgeName || !matchedPacakgeName[1]) {
       return
     }
-    const matchedClassName = xmlContent.match(/(?:interface|class)\s+([a-zA-Z_]+)?\s+extends/)
+    const matchedClassName = xmlContent.match(/(?:interface|class)\s+([\w|\d]*)?/)
     if (!matchedClassName || !matchedClassName[1]) {
       return
     }
@@ -47,7 +47,7 @@ class JavaMapperParser implements IMapperParser {
 
 function findMethodDeclarations(document: TextDocument): Array<MethodDeclaration> {
   const fileContent = document.getText()
-  const matched = fileContent.match(/(?:interface|class).+extends.+{([\s\n\r\S]*)}/)
+  const matched = fileContent.match(/(?:interface|class).+.+{([\s\n\r\S]*)}/)
   if (!matched) {
     return []
   }

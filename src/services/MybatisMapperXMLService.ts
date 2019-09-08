@@ -44,7 +44,7 @@ class MybatisMapperXMLService implements Disposable {
     }
     const workspaceFolderPaths = workspaceFolders.map(f => f.uri.fsPath)
 
-    const pattern = `{${workspaceFolderPaths.join(',')}}/**/resources/**/*.xml`
+    const pattern = `{${workspaceFolderPaths.join(',')}}/**/*.xml`
     const watcher = workspace.createFileSystemWatcher(pattern, false, false, false)
 
     this.disposables.push(
@@ -101,7 +101,7 @@ class MybatisMapperXMLService implements Disposable {
       if (!mapper) {
         return this.remove(uri)
       }
-      const found = this.mapperXMLs.find(m => m.uri.fsPath === uri.fsPath)
+      const found = this.mapperXMLs.find(m => m.uri.fsPath === uri.path)
 
       if (!found) {
         this.mapperXMLs.push(mapper)
