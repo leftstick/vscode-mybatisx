@@ -1,4 +1,4 @@
-# vscode-mybatisx
+# base on vscode-mybatisx
 
 [![vscode version][vs-image]][vs-url]
 ![][install-url]
