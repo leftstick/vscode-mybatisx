@@ -31,8 +31,8 @@ ext install vscode-mybatisx
 
 [GPL v3 License](https://raw.githubusercontent.com/leftstick/vscode-mybatisx/master/LICENSE)
 
-[vs-url]: https://marketplace.visualstudio.com/items?itemName=howardzuo.vscode-mybatisx
-[vs-image]: https://vsmarketplacebadge.apphb.com/version/howardzuo.vscode-mybatisx.svg
-[install-url]: https://vsmarketplacebadge.apphb.com/installs/howardzuo.vscode-mybatisx.svg
-[rate-url]: https://vsmarketplacebadge.apphb.com/rating/howardzuo.vscode-mybatisx.svg
+[vs-url]: https://marketplace.visualstudio.com/items?itemName=niko.vsc-mybatis
+[vs-image]: https://vsmarketplacebadge.apphb.com/version/niko.vsc-mybatis.svg
+[install-url]: https://vsmarketplacebadge.apphb.com/installs/niko.vsc-mybatis.svg
+[rate-url]: https://vsmarketplacebadge.apphb.com/rating/niko.vsc-mybatis.svg
 [license-url]: https://img.shields.io/github/license/leftstick/vscode-mybatisx.svg

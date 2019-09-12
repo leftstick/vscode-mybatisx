@@ -15,6 +15,7 @@ export interface IMybatisMapperXMLService {
 }
 
 export const IMybatisMapperXMLServiceToken = new Token<IMybatisMapperXMLService>()
+export const NAMESPACE_MAPPER: Array<String> = []
 
 @Service(IMybatisMapperXMLServiceToken)
 class MybatisMapperXMLService implements Disposable {
@@ -91,7 +92,6 @@ class MybatisMapperXMLService implements Disposable {
   }
 
   private async save(uri: Uri) {
-    console.log('path==============>' + uri.path)
     workspace.openTextDocument(uri).then(doc => {
       try {
         if (!this.xmlMapperService.isValid(doc)) {
@@ -107,6 +107,7 @@ class MybatisMapperXMLService implements Disposable {
 
         if (!found) {
           this.mapperXMLs.push(mapper)
+          NAMESPACE_MAPPER.push(mapper.namespace)
         } else {
           this.mapperXMLs = this.mapperXMLs.map(m => {
             if (m.uri.fsPath === uri.fsPath) {
