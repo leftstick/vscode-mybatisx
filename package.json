@@ -3,9 +3,9 @@
   "displayName": "vsc-mybatis",
   "publisher": "niko",
   "description": "Mybatis implementation for vscode",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "engines": {
-    "vscode": "^1.36.0"
+    "vscode": "^1.0.0"
   },
   "bugs": {
     "url": "https://github.com/niko-liu/vscode-mybatisx/issues",
@@ -32,7 +32,7 @@
   "devDependencies": {
     "@types/glob": "^7.1.1",
     "@types/node": "^10.12.21",
-    "@types/vscode": "^1.36.0",
+    "@types/vscode": "^1.0.0",
     "@types/mocha": "^5.2.6",
     "ts-loader": "^6.0.4",
     "tslint": "^5.19.0",
