@@ -1,4 +1,4 @@
-# vscode-mybatisx
+# base on vscode-mybatisx
 
 [![vscode version][vs-image]][vs-url]
 ![][install-url]
@@ -31,8 +31,21 @@ ext install vscode-mybatisx
 
 [GPL v3 License](https://raw.githubusercontent.com/leftstick/vscode-mybatisx/master/LICENSE)
 
-[vs-url]: https://marketplace.visualstudio.com/items?itemName=howardzuo.vscode-mybatisx
-[vs-image]: https://vsmarketplacebadge.apphb.com/version/howardzuo.vscode-mybatisx.svg
-[install-url]: https://vsmarketplacebadge.apphb.com/installs/howardzuo.vscode-mybatisx.svg
-[rate-url]: https://vsmarketplacebadge.apphb.com/rating/howardzuo.vscode-mybatisx.svg
+[vs-url]: https://marketplace.visualstudio.com/items?itemName=niko.vsc-mybatis
+[vs-image]: https://vsmarketplacebadge.apphb.com/version/niko.vsc-mybatis.svg
+[install-url]: https://vsmarketplacebadge.apphb.com/installs/niko.vsc-mybatis.svg
+[rate-url]: https://vsmarketplacebadge.apphb.com/rating/niko.vsc-mybatis.svg
 [license-url]: https://img.shields.io/github/license/leftstick/vscode-mybatisx.svg
+
+# release note
+
+## version 1.1.0
+
+### bug fixs
+
+1. Stuck on plugin initializing
+
+### New Features
+
+1. Support low version of vscode
+2. Use namespace to test the class' name wheather or not a Mapper

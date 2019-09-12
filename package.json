@@ -1,26 +1,27 @@
 {
-  "name": "vscode-mybatisx",
-  "displayName": "vscode-mybatisx",
-  "publisher": "howardzuo",
-  "description": "MybatisX implementation for vscode",
-  "version": "1.0.1",
+  "name": "vsc-mybatis",
+  "displayName": "vsc-mybatis",
+  "publisher": "niko",
+  "description": "Mybatis implementation for vscode",
+  "version": "1.1.0",
   "engines": {
-    "vscode": "^1.36.0"
+    "vscode": "^1.0.0"
   },
   "bugs": {
-    "url": "https://github.com/leftstick/vscode-mybatisx/issues",
-    "email": "leftstick@qq.com"
+    "url": "https://github.com/niko-liu/vscode-mybatisx/issues",
+    "email": "173754869@qq.com"
   },
-  "homepage": "https://github.com/leftstick/vscode-mybatisx/blob/master/README.md",
+  "homepage": "https://github.com/niko-liu/vscode-mybatisx/blob/master/README.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/leftstick/vscode-mybatisx.git"
+    "url": "https://github.com/niko-liu/vscode-mybatisx.git"
   },
   "categories": [
     "Language Packs"
   ],
   "activationEvents": [
-    "workspaceContains:**/pom.xml"
+    "workspaceContains:**/pom.xml",
+    "workspaceContains:**/build.gradle"
   ],
   "main": "./dist/extension.js",
   "scripts": {
@@ -31,12 +32,15 @@
   "devDependencies": {
     "@types/glob": "^7.1.1",
     "@types/node": "^10.12.21",
-    "@types/vscode": "^1.36.0",
+    "@types/vscode": "^1.0.0",
+    "@types/mocha": "^5.2.6",
     "ts-loader": "^6.0.4",
-    "tslint": "^5.12.1",
+    "tslint": "^5.19.0",
     "typescript": "^3.3.1",
+    "mocha": "^6.1.4",
     "webpack": "^4.38.0",
-    "webpack-cli": "^3.3.6"
+    "webpack-cli": "^3.3.6",
+    "vscode-test": "^1.2.0"
   },
   "dependencies": {
     "glob": "^7.1.4",
