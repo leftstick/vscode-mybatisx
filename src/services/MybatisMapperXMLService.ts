@@ -1,5 +1,7 @@
 import * as glob from 'glob'
 import { Uri, Disposable, workspace } from 'vscode'
+import * as fs from 'fs'
+import { TextDocument } from 'vscode'
 import { Service, Token, Inject } from 'typedi'
 import { Mapper } from '../types/Codes'
 import { IMapperParser } from '../services/MapperParser'
@@ -74,7 +76,7 @@ class MybatisMapperXMLService implements Disposable {
     }
     const workspaceFolderPaths = workspaceFolders.map(f => f.uri.fsPath)
 
-    const pattern = `${workspaceFolderPaths.join(',')}/**/resources/**/*.xml`
+    const pattern = `${workspaceFolderPaths.join(',')}/**/src/**/resources/**/*.xml`
 
     return new Promise((resolve, reject) => {
       glob(pattern, (err, data) => {
@@ -82,40 +84,41 @@ class MybatisMapperXMLService implements Disposable {
           return reject(err)
         }
 
-        Promise.all(data.map(d => Uri.file(d)).map(d => this.save(d)))
-          .then(() => resolve())
-          .catch(reject)
+        data.map(d => Uri.file(d)).map(d => this.save(d))
+        resolve()
       })
     })
   }
 
   private async save(uri: Uri) {
-    const doc = await workspace.openTextDocument(uri)
+    console.log('path==============>' + uri.path)
+    workspace.openTextDocument(uri).then(doc => {
+      try {
+        if (!this.xmlMapperService.isValid(doc)) {
+          return this.remove(uri)
+        }
 
-    try {
-      if (!this.xmlMapperService.isValid(doc)) {
-        return this.remove(uri)
-      }
+        const mapper = this.xmlMapperService.parse(doc)
+        if (!mapper) {
+          return this.remove(uri)
+        }
 
-      const mapper = this.xmlMapperService.parse(doc)
-      if (!mapper) {
-        return this.remove(uri)
-      }
-      const found = this.mapperXMLs.find(m => m.uri.fsPath === uri.path)
+        const found = this.mapperXMLs.find(m => m.uri.fsPath === uri.path)
 
-      if (!found) {
-        this.mapperXMLs.push(mapper)
-      } else {
-        this.mapperXMLs = this.mapperXMLs.map(m => {
-          if (m.uri.fsPath === uri.fsPath) {
-            return mapper
-          }
-          return m
-        })
+        if (!found) {
+          this.mapperXMLs.push(mapper)
+        } else {
+          this.mapperXMLs = this.mapperXMLs.map(m => {
+            if (m.uri.fsPath === uri.fsPath) {
+              return mapper
+            }
+            return m
+          })
+        }
+      } catch (error) {
+        this.remove(uri)
       }
-    } catch (error) {
-      this.remove(uri)
-    }
+    })
   }
 
   private remove(uri: Uri): void {

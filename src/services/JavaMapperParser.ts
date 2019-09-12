@@ -12,7 +12,7 @@ class JavaMapperParser implements IMapperParser {
     if (!doc) {
       return false
     }
-    return /(interface|class).+[\s\S]+?Mapper/.test(doc.getText())
+    return true
   }
 
   parse(document: TextDocument): Mapper | undefined {
