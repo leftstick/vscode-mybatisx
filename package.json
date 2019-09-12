@@ -8,13 +8,13 @@
     "vscode": "^1.36.0"
   },
   "bugs": {
-    "url": "https://github.com/leftstick/vscode-mybatisx/issues",
-    "email": "leftstick@qq.com"
+    "url": "https://github.com/niko-liu/vscode-mybatisx/issues",
+    "email": "173754869@qq.com"
   },
-  "homepage": "https://github.com/leftstick/vscode-mybatisx/blob/master/README.md",
+  "homepage": "https://github.com/niko-liu/vscode-mybatisx/blob/master/README.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/leftstick/vscode-mybatisx.git"
+    "url": "https://github.com/niko-liu/vscode-mybatisx.git"
   },
   "categories": [
     "Language Packs"
