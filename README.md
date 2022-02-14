@@ -1,9 +1,11 @@
-# vscode-mybatisx
+# vscode-mybatisx (deprecated)
 
 [![vscode version][vs-image]][vs-url]
 ![][install-url]
 ![][rate-url]
 ![][license-url]
+
+> Note: I am leaving this project any more. Please check [niko-liu-vsc-mybatisx](https://github.com/niko-liu/vscode-mybatisx) for continuously support.
 
 This is porting version of [MybatisX](https://gitee.com/baomidou/MybatisX)
 
